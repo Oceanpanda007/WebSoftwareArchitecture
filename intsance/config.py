@@ -3,7 +3,7 @@ import os
 
 class Config(object):
     """
-    Common configurations
+    Database configurations
     """
 
     POSTGRES = {

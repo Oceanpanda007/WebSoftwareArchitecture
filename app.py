@@ -5,33 +5,33 @@ from manage import app, mongo, GIS, EC, NHIS,db
 
 def add_user():
     user_1 = EC(
-        first_name="Aaron",
-        last_name="Essuman",
+        first_name="Ama",
+        last_name="Yeboah",
         age=22
     )
     user_2 = GIS(
-        first_name="David",
-        last_name="Owusu",
+        first_name="Abena",
+        last_name="Aba",
         age=23
     )
     user_3 = NHIS(
-        first_name="Moses",
-        last_name="Yinzor",
+        first_name="YaKojow",
+        last_name="Cladie",
         age=20
     )
     user_4 = {
-        "first_name": "Isaac",
-        "last_name": "Sai",
+        "first_name": "James",
+        "last_name": "Yaw",
         "age": "21",
     }
     user_5 = GIS(
-        first_name="John",
+        first_name="jack",
         last_name="Doe",
         age=18
     )
     user_6 = NHIS(
-        first_name="Priscilla",
-        last_name="Owusu Prempeh",
+        first_name="Aku",
+        last_name="Fosu",
         age=20
     )
 
@@ -41,7 +41,7 @@ def add_user():
     db.session.add(user_5)  # Adds new User record to database
     db.session.add(user_6)  # Adds new User record to database
     db.session.commit()
-    mongo.db.DVLA.insert(user_4)
+    mongo.db.DVLA.insert_one(user_4)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -49,6 +49,9 @@ def index():
     errors = []
 
     add_user()
+
+
+
     if request.method == "POST":
         first_name = request.form['first_name']
         last_name = request.form['last_name']
@@ -73,12 +76,12 @@ def index():
                          'last_name': user['last_name'],
                          'age': user['age']})
 
-            return render_template('welcome.html', search_EC=search_EC, search_GIS=search_GIS,
+            return render_template('table.html', search_EC=search_EC, search_GIS=search_GIS,
                                    search_NHIS=search_NHIS, results_DVLA=search_DVLA)
         else:
             errors = {"error": "The request payload is not in JSON format"}
 
-    return render_template('index.html', errors=errors)
+    return render_template('home.html', errors=errors)
 
 @app.route('/login')
 def login():
